@@ -1,6 +1,6 @@
-# 🌟 Contribution Guide - CVMitra
+# 🌟 Contribution Guide - NaukriMaker
 
-Thank you for considering contributing to **CVMitra**! We welcome all contributions, whether you're fixing bugs, adding features, or improving documentation. Follow this guide to get started. 🚀
+Thank you for considering contributing to **NaukriMaker**! We welcome all contributions, whether you're fixing bugs, adding features, or improving documentation. Follow this guide to get started. 🚀
 
 ---
 
@@ -10,7 +10,7 @@ Thank you for considering contributing to **CVMitra**! We welcome all contributi
 1. Click the **Fork** button on the top right of this repository.
 2. Clone your forked repo to your local machine:
    ```bash
-   git clone https://github.com/your-username/CVMitra.git
+   git clone https://github.com/saiyam0211/CVMitra.git
    cd CVMitra
    ```
 
@@ -84,7 +84,7 @@ Any other comments or considerations.
 ---
 
 ## 👨‍👩‍👦 Join the Discussion
-- **Issues:** Report bugs or request features via [GitHub Issues](https://github.com/your-repo/issues).
+- **Issues:** Report bugs or request features via [GitHub Issues](https://github.com/saiyam0211/CVMitra/issues).
 - **Discussions:** Engage with the community.
 - **PR Reviews:** Help review other PRs.
 
