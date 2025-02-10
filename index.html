@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="header">
+      <h1>Resume Builder</h1>
+      <div>
+        <button id="themeToggle">Toggle Dark Mode</button>
+        <button id="downloadPDF">Download PDF</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="form-section">
+        <div class="template-selector">
+          <label for="template">Select Template</label>
+          <select id="template">
+            <option value="modern">Modern</option>
+            <option value="professional">Professional</option>
+            <option value="minimal">Minimal</option>
+          </select>
+        </div>
+
+        <form id="resumeForm">
+          <h2>Personal Information</h2>
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" />
+          </div>
+
+          <div class="form-group">
+            <label for="summary">Professional Summary</label>
+            <textarea id="summary" name="summary" rows="4"></textarea>
+          </div>
+
+          <h2>Experience</h2>
+          <div id="experienceContainer"></div>
+          <button type="button" id="addExperience">Add Experience</button>
+
+          <h2>Education</h2>
+          <div id="educationContainer"></div>
+          <button type="button" id="addEducation">Add Education</button>
+
+          <h2>Skills</h2>
+          <div id="skillsContainer" class="skills-container"></div>
+          <button type="button" id="addSkill">Add Skill</button>
+        </form>
+      </div>
+
+      <div class="preview-section">
+        <div id="preview"></div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
