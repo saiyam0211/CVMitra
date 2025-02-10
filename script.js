@@ -1,471 +1,361 @@
-
 // State management
 let state = {
   personalInfo: {
-    name: "",
-    email: "",
-    phone: "",
-    summary: "",
+      name: '',
+      email: '',
+      phone: '',
+      summary: ''
   },
   experience: [],
   education: [],
   skills: [],
-  template: "modern",
+  template: 'modern'
 };
 
-// Load saved data from localStorage
-const savedData = localStorage.getItem("resumeData");
-if (savedData) {
-  state = JSON.parse(savedData);
+// DOM Elements
+const resumeForm = document.getElementById('resumeForm');
+const experienceContainer = document.getElementById('experienceContainer');
+const educationContainer = document.getElementById('educationContainer');
+const skillsContainer = document.getElementById('skillsContainer');
+const preview = document.getElementById('preview');
+
+// Initialize application
+function initializeApp() {
+  loadSavedData();
+  attachEventListeners();
   updateFormFromState();
 }
 
-// Form elements
-const resumeForm = document.getElementById("resumeForm");
-const experienceContainer = document.getElementById(
-  "experienceContainer"
-);
-const educationContainer = document.getElementById("educationContainer");
-const skillsContainer = document.getElementById("skillsContainer");
-const preview = document.getElementById("preview");
+// Load saved data from localStorage
+function loadSavedData() {
+  const savedData = localStorage.getItem('resumeData');
+  if (savedData) {
+      state = JSON.parse(savedData);
+  }
+}
 
-// Add event listeners
-document
-  .getElementById("themeToggle")
-  .addEventListener("click", toggleTheme);
-document
-  .getElementById("downloadPDF")
-  .addEventListener("click", downloadPDF);
-document
-  .getElementById("addExperience")
-  .addEventListener("click", addExperience);
-document
-  .getElementById("addEducation")
-  .addEventListener("click", addEducation);
-document.getElementById("addSkill").addEventListener("click", addSkill);
-document.getElementById("template").addEventListener("change", (e) => {
+// Attach event listeners
+function attachEventListeners() {
+  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+  document.getElementById('downloadPDF').addEventListener('click', downloadPDF);
+  document.getElementById('addExperience').addEventListener('click', () => addExperience());
+  document.getElementById('addEducation').addEventListener('click', () => addEducation());
+  document.getElementById('addSkill').addEventListener('click', () => addSkill());
+  document.getElementById('template').addEventListener('change', handleTemplateChange);
+  
+  // Personal info listeners
+  document.getElementById('name').addEventListener('input', handlePersonalInfoInput);
+  document.getElementById('email').addEventListener('input', handlePersonalInfoInput);
+  document.getElementById('phone').addEventListener('input', handlePersonalInfoInput);
+  document.getElementById('summary').addEventListener('input', handlePersonalInfoInput);
+}
+
+// Handle template change
+function handleTemplateChange(e) {
   state.template = e.target.value;
-  updatePreview();
-});
-
-// Initialize form
-function updateFormFromState() {
-  document.getElementById("name").value = state.personalInfo.name;
-  document.getElementById("email").value = state.personalInfo.email;
-  document.getElementById("phone").value = state.personalInfo.phone;
-  document.getElementById("summary").value = state.personalInfo.summary;
-  document.getElementById("template").value = state.template;
-
-  // Render experience items
-  experienceContainer.innerHTML = "";
-  state.experience.forEach((exp, index) => {
-    addExperience(exp);
-  });
-
-  // Render education items
-  educationContainer.innerHTML = "";
-  state.education.forEach((edu, index) => {
-    addEducation(edu);
-  });
-
-  // Render skills
-  skillsContainer.innerHTML = "";
-  state.skills.forEach((skill, index) => {
-    addSkill(skill);
-  });
-
+  saveState();
   updatePreview();
 }
 
-// Form input handlers
+// Handle personal info input
 function handlePersonalInfoInput(e) {
   state.personalInfo[e.target.name] = e.target.value;
   saveState();
   updatePreview();
 }
 
+// Update form from state
+function updateFormFromState() {
+  // Update personal info fields
+  document.getElementById('name').value = state.personalInfo.name || '';
+  document.getElementById('email').value = state.personalInfo.email || '';
+  document.getElementById('phone').value = state.personalInfo.phone || '';
+  document.getElementById('summary').value = state.personalInfo.summary || '';
+  document.getElementById('template').value = state.template || 'modern';
+
+  // Clear existing containers
+  experienceContainer.innerHTML = '';
+  educationContainer.innerHTML = '';
+  skillsContainer.innerHTML = '';
+
+  // Render all sections
+  state.experience.forEach(exp => addExperience(exp));
+  state.education.forEach(edu => addEducation(edu));
+  state.skills.forEach(skill => addSkill(skill));
+
+  updatePreview();
+}
+
+// Experience section handlers
 function addExperience(data = null) {
-  const expDiv = document.createElement("div");
-  expDiv.className = "experience-item";
+  const expDiv = document.createElement('div');
+  expDiv.className = 'experience-item';
+  const index = state.experience.length;
+  
   expDiv.innerHTML = `
-          <div class="form-group">
-              <label>Company</label>
-              <input type="text" class="exp-company" value="${
-                data?.company || ""
-              }">
-          </div>
-          <div class="form-group">
-              <label>Position</label>
-              <input type="text" class="exp-position" value="${
-                data?.position || ""
-              }">
-          </div>
-          <div class="form-group">
-              <label>Duration</label>
-              <input type="text" class="exp-duration" value="${
-                data?.duration || ""
-              }">
-          </div>
-          <div class="form-group">
-              <label>Description</label>
-              <textarea class="exp-description" rows="3">${
-                data?.description || ""
-              }</textarea>
-          </div>
-          <button type="button" class="btn-danger remove-experience">Remove</button>
-      `;
+      <div class="form-group">
+          <label>Company</label>
+          <input type="text" class="exp-company" data-index="${index}" value="${data?.company || ''}">
+      </div>
+      <div class="form-group">
+          <label>Position</label>
+          <input type="text" class="exp-position" data-index="${index}" value="${data?.position || ''}">
+      </div>
+      <div class="form-group">
+          <label>Duration</label>
+          <input type="text" class="exp-duration" data-index="${index}" value="${data?.duration || ''}">
+      </div>
+      <div class="form-group">
+          <label>Description</label>
+          <textarea class="exp-description" data-index="${index}" rows="3">${data?.description || ''}</textarea>
+      </div>
+      <button type="button" class="btn-danger remove-experience" data-index="${index}">Remove</button>
+  `;
 
   experienceContainer.appendChild(expDiv);
-  attachExperienceListeners(expDiv);
 
   if (!data) {
-    state.experience.push({
-      company: "",
-      position: "",
-      duration: "",
-      description: "",
-    });
-    saveState();
+      state.experience.push({
+          company: '',
+          position: '',
+          duration: '',
+          description: ''
+      });
+      saveState();
+      updatePreview();
   }
+
+  attachExperienceListeners(expDiv);
 }
 
 function attachExperienceListeners(expDiv) {
-  const inputs = expDiv.querySelectorAll("input, textarea");
-  const index = Array.from(experienceContainer.children).indexOf(expDiv);
-
-  inputs.forEach((input) => {
-    input.addEventListener("input", (e) => {
-      const field = e.target.className.split("-")[1];
-      state.experience[index][field] = e.target.value;
-      saveState();
-      updatePreview();
-    });
+  const inputs = expDiv.querySelectorAll('input, textarea');
+  inputs.forEach(input => {
+      input.addEventListener('input', handleExperienceInput);
   });
 
-  expDiv
-    .querySelector(".remove-experience")
-    .addEventListener("click", () => {
-      expDiv.remove();
-      state.experience.splice(index, 1);
-      saveState();
-      updatePreview();
-    });
+  expDiv.querySelector('.remove-experience').addEventListener('click', handleExperienceRemove);
 }
 
+function handleExperienceInput(e) {
+  const index = parseInt(e.target.dataset.index);
+  const field = e.target.className.split('-')[1];
+  state.experience[index][field] = e.target.value;
+  saveState();
+  updatePreview();
+}
+
+function handleExperienceRemove(e) {
+  const index = parseInt(e.target.dataset.index);
+  state.experience.splice(index, 1);
+  saveState();
+  updateFormFromState();
+}
+
+// Education section handlers
 function addEducation(data = null) {
-  const eduDiv = document.createElement("div");
-  eduDiv.className = "education-item";
+  const eduDiv = document.createElement('div');
+  eduDiv.className = 'education-item';
+  const index = state.education.length;
+
   eduDiv.innerHTML = `
-          <div class="form-group">
-              <label>School</label>
-              <input type="text" class="edu-school" value="${
-                data?.school || ""
-              }">
-          </div>
-          <div class="form-group">
-              <label>Degree</label>
-              <input type="text" class="edu-degree" value="${
-                data?.degree || ""
-              }">
-          </div>
-          <div class="form-group">
-              <label>Year</label>
-              <input type="text" class="edu-year" value="${
-                data?.year || ""
-              }">
-          </div>
-          <button type="button" class="btn-danger remove-education">Remove</button>
-      `;
+      <div class="form-group">
+          <label>School</label>
+          <input type="text" class="edu-school" data-index="${index}" value="${data?.school || ''}">
+      </div>
+      <div class="form-group">
+          <label>Degree</label>
+          <input type="text" class="edu-degree" data-index="${index}" value="${data?.degree || ''}">
+      </div>
+      <div class="form-group">
+          <label>Year</label>
+          <input type="text" class="edu-year" data-index="${index}" value="${data?.year || ''}">
+      </div>
+      <button type="button" class="btn-danger remove-education" data-index="${index}">Remove</button>
+  `;
 
   educationContainer.appendChild(eduDiv);
-  attachEducationListeners(eduDiv);
 
   if (!data) {
-    state.education.push({
-      school: "",
-      degree: "",
-      year: "",
-    });
-    saveState();
+      state.education.push({
+          school: '',
+          degree: '',
+          year: ''
+      });
+      saveState();
+      updatePreview();
   }
+
+  attachEducationListeners(eduDiv);
 }
 
 function attachEducationListeners(eduDiv) {
-  const inputs = eduDiv.querySelectorAll("input");
-  const index = Array.from(educationContainer.children).indexOf(eduDiv);
-
-  inputs.forEach((input) => {
-    input.addEventListener("input", (e) => {
-      const field = e.target.className.split("-")[1];
-      state.education[index][field] = e.target.value;
-      saveState();
-      updatePreview();
-    });
+  const inputs = eduDiv.querySelectorAll('input');
+  inputs.forEach(input => {
+      input.addEventListener('input', handleEducationInput);
   });
 
-  eduDiv
-    .querySelector(".remove-education")
-    .addEventListener("click", () => {
-      eduDiv.remove();
-      state.education.splice(index, 1);
-      saveState();
-      updatePreview();
-    });
+  eduDiv.querySelector('.remove-education').addEventListener('click', handleEducationRemove);
 }
 
-function addSkill(skill = "") {
-  const skillDiv = document.createElement("div");
-  skillDiv.className = "skill-item";
+function handleEducationInput(e) {
+  const index = parseInt(e.target.dataset.index);
+  const field = e.target.className.split('-')[1];
+  state.education[index][field] = e.target.value;
+  saveState();
+  updatePreview();
+}
+
+function handleEducationRemove(e) {
+  const index = parseInt(e.target.dataset.index);
+  state.education.splice(index, 1);
+  saveState();
+  updateFormFromState();
+}
+
+// Skills section handlers
+function addSkill(skill = '') {
+  const skillDiv = document.createElement('div');
+  skillDiv.className = 'skill-item';
+  const index = state.skills.length;
+
   skillDiv.innerHTML = `
-          <input type="text" class="skill-input" value="${skill}">
-          <button type="button" class="btn-danger remove-skill">×</button>
-      `;
+      <input type="text" class="skill-input" data-index="${index}" value="${skill}">
+      <button type="button" class="btn-danger remove-skill" data-index="${index}">×</button>
+  `;
 
   skillsContainer.appendChild(skillDiv);
-  attachSkillListeners(skillDiv);
 
   if (!skill) {
-    state.skills.push("");
-    saveState();
+      state.skills.push('');
+      saveState();
+      updatePreview();
   }
+
+  attachSkillListeners(skillDiv);
 }
 
 function attachSkillListeners(skillDiv) {
-  const input = skillDiv.querySelector(".skill-input");
-  const index = Array.from(skillsContainer.children).indexOf(skillDiv);
+  skillDiv.querySelector('.skill-input').addEventListener('input', handleSkillInput);
+  skillDiv.querySelector('.remove-skill').addEventListener('click', handleSkillRemove);
+}
 
-  input.addEventListener("input", (e) => {
-    state.skills[index] = e.target.value;
-    saveState();
-    updatePreview();
-  });
+function handleSkillInput(e) {
+  const index = parseInt(e.target.dataset.index);
+  state.skills[index] = e.target.value;
+  saveState();
+  updatePreview();
+}
 
-  skillDiv
-    .querySelector(".remove-skill")
-    .addEventListener("click", () => {
-      skillDiv.remove();
-      state.skills.splice(index, 1);
-      saveState();
-      updatePreview();
-    });
+function handleSkillRemove(e) {
+  const index = parseInt(e.target.dataset.index);
+  state.skills.splice(index, 1);
+  saveState();
+  updateFormFromState();
 }
 
 // Theme toggle
 function toggleTheme() {
-  document.body.setAttribute(
-    "data-theme",
-    document.body.getAttribute("data-theme") === "dark" ? "light" : "dark"
+  document.body.setAttribute('data-theme',
+      document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
   );
 }
 
-// Preview update
+// Save state to localStorage
+function saveState() {
+  localStorage.setItem('resumeData', JSON.stringify(state));
+}
+
+// Download PDF
+async function downloadPDF() {
+  const element = document.getElementById('preview');
+  const opt = {
+      margin: 1,
+      filename: `${state.personalInfo.name.replace(/\s+/g, '_')}_resume.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
+
+  try {
+      await html2pdf().set(opt).from(element).save();
+  } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Error generating PDF. Please try again.');
+  }
+}
+
+// Update preview based on template
 function updatePreview() {
-  const template = state.template;
-  let previewHTML = "";
-
-  switch (template) {
-    case "modern":
-      previewHTML = `
-                  <div class="preview-header">
-                      <h1>${state.personalInfo.name}</h1>
-                      <p>${state.personalInfo.email} | ${
-        state.personalInfo.phone
-      }</p>
-                  </div>
-                  
-                  <div class="preview-summary">
-                      <h2>Professional Summary</h2>
-                      <p>${state.personalInfo.summary}</p>
-                  </div>
-
-                  <div class="preview-experience">
-                      <h2>Experience</h2>
-                      ${state.experience
-                        .map(
-                          (exp) => `
-                          <div class="preview-experience-item">
-                              <h3>${exp.position} at ${exp.company}</h3>
-<p>${exp.description}</p>
-                          </div>
-                      `
-                        )
-                        .join("")}
-                  </div>
-
-                  <div class="preview-education">
-                      <h2>Education</h2>
-                      ${state.education
-                        .map(
-                          (edu) => `
-                          <div class="preview-education-item">
-                              <h3>${edu.degree}</h3>
-                              <p>${edu.school} - ${edu.year}</p>
-                          </div>
-                      `
-                        )
-                        .join("")}
-                  </div>
-
-                  <div class="preview-skills">
-                      <h2>Skills</h2>
-                      <div class="preview-skills-list">
-                          ${state.skills
-                            .filter((skill) => skill.trim())
-                            .join(" • ")}
-                      </div>
-                  </div>
-              `;
-      break;
-
-    case "professional":
-      previewHTML = `
-                  <div class="preview-header" style="border-bottom: 2px solid #2563eb; padding-bottom: 1rem;">
-                      <h1 style="color: #2563eb">${
-                        state.personalInfo.name
-                      }</h1>
-                      <p>${state.personalInfo.email} | ${
-        state.personalInfo.phone
-      }</p>
-                  </div>
-                  
-                  <div class="preview-summary">
-                      <h2 style="color: #2563eb">Professional Summary</h2>
-                      <p>${state.personalInfo.summary}</p>
-                  </div>
-
-                  <div class="preview-experience">
-                      <h2 style="color: #2563eb">Professional Experience</h2>
-                      ${state.experience
-                        .map(
-                          (exp) => `
-                          <div class="preview-experience-item" style="margin-bottom: 1rem;">
-                              <h3 style="margin-bottom: 0.25rem;">${exp.position}</h3>
-                              <p style="font-weight: bold;">${exp.company} | ${exp.duration}</p>
-                              <p>${exp.description}</p>
-                          </div>
-                      `
-                        )
-                        .join("")}
-                  </div>
-
-                  <div class="preview-education">
-                      <h2 style="color: #2563eb">Education</h2>
-                      ${state.education
-                        .map(
-                          (edu) => `
-                          <div class="preview-education-item" style="margin-bottom: 1rem;">
-                              <h3 style="margin-bottom: 0.25rem;">${edu.degree}</h3>
-                              <p>${edu.school} - ${edu.year}</p>
-                          </div>
-                      `
-                        )
-                        .join("")}
-                  </div>
-
-                  <div class="preview-skills">
-                      <h2 style="color: #2563eb">Skills</h2>
-                      <p>${state.skills
-                        .filter((skill) => skill.trim())
-                        .join(" • ")}</p>
-                  </div>
-              `;
-      break;
-
-    case "minimal":
-      previewHTML = `
-                  <div class="preview-header" style="margin-bottom: 2rem;">
-                      <h1>${state.personalInfo.name}</h1>
-                      <p>${state.personalInfo.email} | ${
-        state.personalInfo.phone
-      }</p>
-                  </div>
-                  
-                  <div class="preview-summary">
-                      <p>${state.personalInfo.summary}</p>
-                  </div>
-
-                  <div class="preview-experience">
-                      <h2>Experience</h2>
-                      ${state.experience
-                        .map(
-                          (exp) => `
-                          <div class="preview-experience-item" style="margin-bottom: 1rem;">
-                              <p style="font-weight: bold;">${exp.position} • ${exp.company}</p>
-                              <p style="font-style: italic;">${exp.duration}</p>
-                              <p>${exp.description}</p>
-                          </div>
-                      `
-                        )
-                        .join("")}
-                  </div>
-
-                  <div class="preview-education">
-                      <h2>Education</h2>
-                      ${state.education
-                        .map(
-                          (edu) => `
-                          <div class="preview-education-item" style="margin-bottom: 1rem;">
-                              <p style="font-weight: bold;">${edu.degree}</p>
-                              <p>${edu.school} • ${edu.year}</p>
-                          </div>
-                      `
-                        )
-                        .join("")}
-                  </div>
-
-                  <div class="preview-skills">
-                      <h2>Skills</h2>
-                      <p>${state.skills
-                        .filter((skill) => skill.trim())
-                        .join(" • ")}</p>
-                  </div>
-              `;
-      break;
+  let previewHTML = '';
+  
+  switch (state.template) {
+      case 'modern':
+          previewHTML = generateModernTemplate();
+          break;
+      case 'professional':
+          previewHTML = generateProfessionalTemplate();
+          break;
+      case 'minimal':
+          previewHTML = generateMinimalTemplate();
+          break;
   }
 
   preview.innerHTML = previewHTML;
 }
 
-// Save state to localStorage
-function saveState() {
-  localStorage.setItem("resumeData", JSON.stringify(state));
+// Template generators
+function generateModernTemplate() {
+  return `
+      <div class="preview-header">
+          <h1>${state.personalInfo.name}</h1>
+          <p>${state.personalInfo.email} | ${state.personalInfo.phone}</p>
+      </div>
+      
+      <div class="preview-summary">
+          <h2>Professional Summary</h2>
+          <p>${state.personalInfo.summary}</p>
+      </div>
+
+      <div class="preview-experience">
+          <h2>Experience</h2>
+          ${state.experience.map(exp => `
+              <div class="preview-experience-item">
+                  <h3>${exp.position} at ${exp.company}</h3>
+                  <p>${exp.duration}</p>
+                  <p>${exp.description}</p>
+              </div>
+          `).join('')}
+      </div>
+
+      <div class="preview-education">
+          <h2>Education</h2>
+          ${state.education.map(edu => `
+              <div class="preview-education-item">
+                  <h3>${edu.degree}</h3>
+                  <p>${edu.school} - ${edu.year}</p>
+              </div>
+          `).join('')}
+      </div>
+
+      <div class="preview-skills">
+          <h2>Skills</h2>
+          <div class="preview-skills-list">
+              ${state.skills.filter(skill => skill.trim()).join(' • ')}
+          </div>
+      </div>
+  `;
 }
 
-// Download PDF
-async function downloadPDF() {
-  const element = document.getElementById("preview");
-  const opt = {
-    margin: 1,
-    filename: `${state.personalInfo.name.replace(
-      /\s+/g,
-      "_"
-    )}_resume.pdf`,
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-  };
-
-  try {
-    await html2pdf().set(opt).from(element).save();
-  } catch (error) {
-    console.error("Error generating PDF:", error);
-    alert("Error generating PDF. Please try again.");
-  }
+function generateProfessionalTemplate() {
+  // Similar to modern template but with different styling
+  // Add your professional template HTML here
 }
 
-// Add input listeners for personal info
-document
-  .getElementById("name")
-  .addEventListener("input", handlePersonalInfoInput);
-document
-  .getElementById("email")
-  .addEventListener("input", handlePersonalInfoInput);
-document
-  .getElementById("phone")
-  .addEventListener("input", handlePersonalInfoInput);
-document
-  .getElementById("summary")
-  .addEventListener("input", handlePersonalInfoInput);
+function generateMinimalTemplate() {
+  // Similar to modern template but with minimal styling
+  // Add your minimal template HTML here
+}
 
-// Initial preview update
-updatePreview();
+// Initialize the application
+document.addEventListener('DOMContentLoaded', initializeApp);
