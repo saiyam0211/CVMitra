@@ -27,7 +27,7 @@ An open-source **resume builder** that allows users to create, preview, and down
 git clone https://github.com/yourusername/NaukriMaker.git
 
 # Navigate to project folder
-cd NaukriMaker
+cd CVMitra
 
 # Open index.html in your browser
 ```
@@ -75,6 +75,6 @@ Feel free to **star ⭐ this repo** if you find it useful!
 ---
 
 ### 📞 Contact & Support
-For questions, reach out via email: **your.email@example.com** or open an issue in the repo.
+For questions, reach out via email: **saiyamkumar2007@gmail.com** or open an issue in the repo.
 
 Happy coding! 🚀
