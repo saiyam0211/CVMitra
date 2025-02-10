@@ -1,0 +1,33 @@
+name: "🚀 Feature Request"
+description: "Suggest a new feature or improvement for CVMitra"
+title: "[Feature] "
+labels: ["enhancement"]
+assignees: ["your-github-username"]
+body:
+  - type: markdown
+    attributes:
+      value: "## 💡 Suggest a new feature for CVMitra!"
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: "Describe the Feature"
+      description: "Explain what the feature should do."
+      placeholder: "Example: Add an AI-powered resume suggestion feature..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-needed
+    attributes:
+      label: "Why is this Needed?"
+      description: "Explain why this feature is useful."
+      placeholder: "This feature will help users improve their resumes easily..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: "Additional Context"
+      description: "Provide screenshots, references, or extra details."
