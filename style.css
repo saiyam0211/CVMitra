@@ -60,6 +60,10 @@ body {
   color: white;
 }
 
+.mobile-menu-btn {
+  display: none;
+}
+
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -261,6 +265,30 @@ button:hover {
 }
 
 @media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .mobile-menu-btn.active + .nav-links {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 4rem;
+    right: 3.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--input-bg);
+  }
+
+  .nav-links button {
+    background-color: transparent;
+    color: var(--text-color);
+  }
+
+  .mobile-menu-btn {
+    display: block;
+    background-color: transparent;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+  }
   .container {
     grid-template-columns: 1fr;
   }
