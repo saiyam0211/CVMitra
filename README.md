@@ -24,7 +24,7 @@ An open-source **resume builder** that allows users to create, preview, and down
 ## 🛠️ Installation & Setup
 ```bash
 # Clone the repository
-git clone https://github.com/saiyam0211/NaukriMaker.git
+git clone https://github.com/saiyam0211/CVMaker.git
 
 # Navigate to project folder
 cd CVMitra
