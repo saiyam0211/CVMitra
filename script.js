@@ -18,6 +18,7 @@ const experienceContainer = document.getElementById('experienceContainer');
 const educationContainer = document.getElementById('educationContainer');
 const skillsContainer = document.getElementById('skillsContainer');
 const preview = document.getElementById('preview');
+const mobileNavBtn = document.getElementById('mobileMenuBtn')
 
 // Initialize application
 function initializeApp() {
@@ -38,6 +39,7 @@ function loadSavedData() {
 function attachEventListeners() {
   document.getElementById('themeToggle').addEventListener('click', toggleTheme);
   document.getElementById('downloadPDF').addEventListener('click', downloadPDF);
+  mobileNavBtn.addEventListener('click', toggleMobileNav)
   document.getElementById('addExperience').addEventListener('click', () => addExperience());
   document.getElementById('addEducation').addEventListener('click', () => addEducation());
   document.getElementById('addSkill').addEventListener('click', () => addSkill());
@@ -282,6 +284,16 @@ async function downloadPDF() {
   } catch (error) {
       console.error('Error generating PDF:', error);
       alert('Error generating PDF. Please try again.');
+  }
+}
+
+function toggleMobileNav() {
+  mobileNavBtn.classList.toggle('active')
+  
+  if (mobileNavBtn.classList.contains('active')) {
+    mobileNavBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+  } else {
+    mobileNavBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
   }
 }
 
