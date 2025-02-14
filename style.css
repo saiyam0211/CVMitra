@@ -43,6 +43,12 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.template-selector select:hover {
+  border: 1.5px solid black;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
 .preview-section {
   background-color: white;
   padding: 2rem;
@@ -84,6 +90,13 @@ textarea {
   color: var(--text-color);
 }
 
+input:hover, 
+textarea:hover {
+  border: 1.5px solid black;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
 button {
   background-color: var(--primary-color);
   color: white;
@@ -93,10 +106,6 @@ button {
   cursor: pointer;
   font-weight: 500;
   transition: background-color 0.3s ease;
-}
-
-button:hover {
-  opacity: 0.9;
 }
 
 .template-selector {
@@ -109,12 +118,30 @@ button:hover {
   border-radius: 4px;
 }
 
+
+/*Specific styles for the animations. */
+
+@keyframes slideInFromLeftAnimation {
+  0% {
+    transform: translateX(-100%);
+    border: 0px;
+    opacity: 0%;
+  }
+  100% {
+    transform: translateX(0);
+    border: 1px;
+    opacity: 100%;
+  }
+}
+
 .experience-item,
 .education-item {
   border: 1px solid #ddd;
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 4px;
+  animation: 1s ease-in-out 0s 1 slideInFromLeftAnimation;
+  /*This animation takes 1 second, it has a slow start and end, it does not wait to play, and it plays only once.*/
 }
 
 .btn {
@@ -140,8 +167,8 @@ button:hover {
 
 .btn-primary:hover {
   background-color: #1d4ed8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.35);
 }
 
 .btn-primary:active {
@@ -175,7 +202,12 @@ button:hover {
 
 .btn-danger:hover {
   background-color: #dc2626;
-  transform: translateY(-1px);
+  transform: translateY(-1.5px);
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
+}
+
+.btn-danger:active {
+  transform: translateY(0);
 }
 
 /* Icon Button */
@@ -237,6 +269,8 @@ button:hover {
     transform: rotate(1turn);
   }
 }
+
+
 .skills-container {
   display: flex;
   flex-wrap: wrap;
@@ -247,6 +281,7 @@ button:hover {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  animation: 1s ease-in-out 0s 1 slideInFromLeftAnimation;
 }
 
 #preview {
@@ -339,7 +374,5 @@ footer {
     margin-top: 0.5rem;
     font-size: 1rem;
   }
-  .container {
-    grid-template-columns: 1fr;
-  }
+
 }

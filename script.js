@@ -356,17 +356,20 @@ function generateModernTemplate() {
               ${state.skills.filter(skill => skill.trim()).join(' • ')}
           </div>
       </div>
+  </div>    
   `;
 }
 
 function generateProfessionalTemplate() {
   // Similar to modern template but with different styling
   // Add your professional template HTML here
+  //Don't forget to wrap the whole template in a div with the class of preview-professional otherwise the animations won't work. 
 }
 
 function generateMinimalTemplate() {
   // Similar to modern template but with minimal styling
   // Add your minimal template HTML here
+  //Don't forget to wrap the whole template in a div with the class of preview-minimal otherwise the animations won't work. 
 }
 
 // Initialize the application
