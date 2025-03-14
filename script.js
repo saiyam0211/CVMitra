@@ -83,7 +83,7 @@ function updateFormFromState() {
   // Render all sections
   state.experience.forEach(exp => addExperience(exp));
   state.education.forEach(edu => addEducation(edu));
-  state.skills.forEach(skill => addSkill(skill));
+  state.skills.forEach(skill => addSkill(skill, true));
 
   updatePreview();
 }
@@ -216,7 +216,7 @@ function handleEducationRemove(e) {
 }
 
 // Skills section handlers
-function addSkill(skill = '') {
+function addSkill(skill = '', fromState = false) {
   const skillDiv = document.createElement('div');
   skillDiv.className = 'skill-item';
   const index = state.skills.length;
@@ -228,8 +228,9 @@ function addSkill(skill = '') {
 
   skillsContainer.appendChild(skillDiv);
 
-  if (!skill) {
-      state.skills.push('');
+  // Only add to state if it's a new skill (not loaded from state)
+  if (!fromState) {
+      state.skills.push(skill);
       saveState();
       updatePreview();
   }
