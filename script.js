@@ -311,6 +311,9 @@ function updatePreview() {
       case 'minimal':
           previewHTML = generateMinimalTemplate();
           break;
+      case 'creative':
+          previewHTML = generateCreativeTemplate();
+          break;
   }
 
   preview.innerHTML = previewHTML;
@@ -360,13 +363,153 @@ function generateModernTemplate() {
 }
 
 function generateProfessionalTemplate() {
-  // Similar to modern template but with different styling
-  // Add your professional template HTML here
+  return `
+      <div class="preview-professional">
+          <div class="preview-header">
+              <h1>${state.personalInfo.name}</h1>
+              <div class="contact-info">
+                  <p><strong>Email:</strong> ${state.personalInfo.email}</p>
+                  <p><strong>Phone:</strong> ${state.personalInfo.phone}</p>
+              </div>
+          </div>
+          
+          <div class="preview-section">
+              <h2>Professional Summary</h2>
+              <p>${state.personalInfo.summary}</p>
+          </div>
+
+          <div class="preview-section">
+              <h2>Experience</h2>
+              ${state.experience.map(exp => `
+                  <div class="preview-item">
+                      <h3>${exp.position}</h3>
+                      <h4>${exp.company} | ${exp.duration}</h4>
+                      <p>${exp.description}</p>
+                  </div>
+              `).join('')}
+          </div>
+
+          <div class="preview-section">
+              <h2>Education</h2>
+              ${state.education.map(edu => `
+                  <div class="preview-item">
+                      <h3>${edu.degree}</h3>
+                      <h4>${edu.school} | ${edu.year}</h4>
+                  </div>
+              `).join('')}
+          </div>
+
+          <div class="preview-section">
+              <h2>Skills</h2>
+              <p>${state.skills.filter(skill => skill.trim()).join(' • ')}</p>
+          </div>
+      </div>
+  `;
 }
 
 function generateMinimalTemplate() {
-  // Similar to modern template but with minimal styling
-  // Add your minimal template HTML here
+  return `
+      <div class="preview-minimal">
+          <div class="preview-header">
+              <h1>${state.personalInfo.name}</h1>
+              <p>${state.personalInfo.email} | ${state.personalInfo.phone}</p>
+          </div>
+          
+          <hr>
+          
+          <div class="preview-summary">
+              <p>${state.personalInfo.summary}</p>
+          </div>
+
+          <hr>
+
+          <div class="preview-section">
+              <h2>Experience</h2>
+              ${state.experience.map(exp => `
+                  <div class="preview-item">
+                      <div class="item-header">
+                          <h3>${exp.position} - ${exp.company}</h3>
+                          <span>${exp.duration}</span>
+                      </div>
+                      <p>${exp.description}</p>
+                  </div>
+              `).join('')}
+          </div>
+
+          <hr>
+
+          <div class="preview-section">
+              <h2>Education</h2>
+              ${state.education.map(edu => `
+                  <div class="preview-item">
+                      <div class="item-header">
+                          <h3>${edu.degree} - ${edu.school}</h3>
+                          <span>${edu.year}</span>
+                      </div>
+                  </div>
+              `).join('')}
+          </div>
+
+          <hr>
+
+          <div class="preview-section">
+              <h2>Skills</h2>
+              <p>${state.skills.filter(skill => skill.trim()).join(' • ')}</p>
+          </div>
+      </div>
+  `;
+}
+
+function generateCreativeTemplate() {
+  return `
+      <div class="preview-creative">
+          <div class="preview-header">
+              <h1>${state.personalInfo.name}</h1>
+              <div class="contact-info">
+                  <p>${state.personalInfo.email}</p>
+                  <p>${state.personalInfo.phone}</p>
+              </div>
+          </div>
+          
+          <div class="preview-section">
+              <h2>About Me</h2>
+              <p>${state.personalInfo.summary}</p>
+          </div>
+
+          <div class="preview-section">
+              <h2>Work Experience</h2>
+              ${state.experience.map(exp => `
+                  <div class="preview-item">
+                      <div class="item-header">
+                          <h3>${exp.position}</h3>
+                          <span class="company-name">${exp.company}</span>
+                      </div>
+                      <p class="duration">${exp.duration}</p>
+                      <p>${exp.description}</p>
+                  </div>
+              `).join('')}
+          </div>
+
+          <div class="preview-section">
+              <h2>Education</h2>
+              ${state.education.map(edu => `
+                  <div class="preview-item">
+                      <h3>${edu.degree}</h3>
+                      <p>${edu.school}, ${edu.year}</p>
+                  </div>
+              `).join('')}
+          </div>
+
+          <div class="preview-section">
+              <h2>Skills & Expertise</h2>
+              <div class="skills-list">
+                  ${state.skills.filter(skill => skill.trim()).map(skill => `
+                      <span class="skill-tag">${skill}</span>
+                  `).join('')}
+              </div>
+          </div>
+      </div>
+  `;
 }
 
 // Initialize the application

@@ -343,3 +343,175 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+/* Professional Template Styles */
+.preview-professional {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.5;
+}
+
+.preview-professional .preview-header {
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.preview-professional .preview-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.preview-professional .contact-info {
+  display: flex;
+  justify-content: space-between;
+  max-width: 400px;
+}
+
+.preview-professional .preview-section {
+  margin-bottom: 1.5rem;
+}
+
+.preview-professional h2 {
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+}
+
+.preview-professional .preview-item {
+  margin-bottom: 1rem;
+}
+
+.preview-professional h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.preview-professional h4 {
+  font-size: 1rem;
+  font-weight: normal;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+/* Minimal Template Styles */
+.preview-minimal {
+  font-family: 'Helvetica', sans-serif;
+  line-height: 1.4;
+}
+
+.preview-minimal .preview-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.preview-minimal .preview-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.preview-minimal hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 1rem 0;
+}
+
+.preview-minimal .preview-section {
+  margin-bottom: 1rem;
+}
+
+.preview-minimal h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.preview-minimal .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.25rem;
+}
+
+.preview-minimal h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.preview-minimal span {
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* Creative Template Styles */
+.preview-creative {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+.preview-creative .preview-header {
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--primary-color);
+  padding-left: 1rem;
+}
+
+.preview-creative .preview-header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.preview-creative .contact-info {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.preview-creative .preview-section {
+  margin-bottom: 2rem;
+}
+
+.preview-creative h2 {
+  font-size: 1.4rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.preview-creative .preview-item {
+  margin-bottom: 1.5rem;
+}
+
+.preview-creative .item-header {
+  margin-bottom: 0.5rem;
+}
+
+.preview-creative h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.preview-creative .company-name {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.preview-creative .duration {
+  font-style: italic;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.preview-creative .skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.preview-creative .skill-tag {
+  background-color: #f0f4f8;
+  color: var(--primary-color);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
