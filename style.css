@@ -44,7 +44,8 @@ body {
 }
 
 .preview-section {
-  background-color: white;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -78,7 +79,8 @@ input,
 textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--text-color);
+  opacity: 0.3;
   border-radius: 4px;
   background-color: var(--input-bg);
   color: var(--text-color);
@@ -111,7 +113,8 @@ button:hover {
 
 .experience-item,
 .education-item {
-  border: 1px solid #ddd;
+  border: 1px solid var(--text-color);
+  opacity: 0.3;
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 4px;
@@ -271,14 +274,14 @@ footer {
   width: 100%;
   height: 4rem;
   background-color: var(--primary-color);
-  color: #d1d5db;
+  color: var(--bg-color);
   font-size: 0.8rem;
 }
 
 .footer-nav {
   display: flex;
   gap: 1rem;
-  color: #d1d5db;
+  color: var(--bg-color);
 }
 
 .footer-nav a {
@@ -289,7 +292,7 @@ footer {
 .social-icons {
   display: flex;
   gap: 0.8rem;
-  color: #d1d5db;
+  color: var(--bg-color);
 }
 
 .social-icons a {
@@ -411,7 +414,8 @@ footer {
 
 .preview-minimal hr {
   border: none;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--text-color);
+  opacity: 0.3;
   margin: 1rem 0;
 }
 
@@ -472,7 +476,8 @@ footer {
   font-size: 1.4rem;
   color: var(--primary-color);
   margin-bottom: 1rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--text-color);
+  opacity: 0.3;
   padding-bottom: 0.5rem;
 }
 
@@ -499,7 +504,7 @@ footer {
   font-style: italic;
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
-  color: #666;
+  color: var(--text-color);
 }
 
 .preview-creative .skills-list {
@@ -509,7 +514,7 @@ footer {
 }
 
 .preview-creative .skill-tag {
-  background-color: #f0f4f8;
+  background-color: var(--input-bg);
   color: var(--primary-color);
   padding: 0.25rem 0.75rem;
   border-radius: 4px;

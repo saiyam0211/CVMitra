@@ -22,9 +22,15 @@ const mobileNavBtn = document.getElementById('mobileMenuBtn')
 
 // Initialize application
 function initializeApp() {
-  loadSavedData();
-  attachEventListeners();
-  updateFormFromState();
+    // Initialize theme from localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.body.setAttribute('data-theme', savedTheme);
+    }
+    
+    loadSavedData();
+    attachEventListeners();
+    updateFormFromState();
 }
 
 // Load saved data from localStorage
@@ -259,9 +265,10 @@ function handleSkillRemove(e) {
 
 // Theme toggle
 function toggleTheme() {
-  document.body.setAttribute('data-theme',
-      document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
-  );
+    const currentTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', currentTheme);
+    localStorage.setItem('theme', currentTheme);
+    updatePreview(); // Refresh the preview to apply theme changes
 }
 
 // Save state to localStorage
@@ -271,21 +278,32 @@ function saveState() {
 
 // Download PDF
 async function downloadPDF() {
-  const element = document.getElementById('preview');
-  const opt = {
-      margin: 1,
-      filename: `${state.personalInfo.name.replace(/\s+/g, '_')}_resume.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-  };
+    const element = document.getElementById('preview');
+    const currentTheme = document.body.getAttribute('data-theme') || 'light';
+    
+    // Create a clone of the preview element to avoid modifying the original
+    const clonedElement = element.cloneNode(true);
+    
+    // Apply current theme styles to the cloned element
+    if (currentTheme === 'dark') {
+        clonedElement.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--bg-color');
+        clonedElement.style.color = getComputedStyle(document.body).getPropertyValue('--text-color');
+    }
+    
+    const opt = {
+        margin: 1,
+        filename: `${state.personalInfo.name.replace(/\s+/g, '_')}_resume.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
 
-  try {
-      await html2pdf().set(opt).from(element).save();
-  } catch (error) {
-      console.error('Error generating PDF:', error);
-      alert('Error generating PDF. Please try again.');
-  }
+    try {
+        await html2pdf().set(opt).from(clonedElement).save();
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        alert('Error generating PDF. Please try again.');
+    }
 }
 
 function toggleMobileNav() {
